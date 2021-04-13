@@ -1,7 +1,3 @@
-//
-// Created by Kylian Lee on 2021/04/09.
-//
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -27,19 +23,27 @@ int main() {
     sort(b.begin(), b.end());
 
     cache[0] = 0;
-    int maximum = cache[0];
+    int maximum = 0;
 
     for(int i = 0; i < n; i++){
-        int tmp = b[i] - beacons[b[i]][1];
-        if(tmp <= 1) {
+        int temp = b[i] - beacons[b[i]][1];
+        if(temp <= 1) {
             cache[b[i]] = 1;
             continue;
         }
-        while(tmp--){
-            if(beacons[tmp][0])
+        int j = temp;
+
+        while(--j){
+            if(beacons[j][0] == 1)
                 break;
         }
-        cache[b[i]] = cache[tmp] + 1;
+
+        if(j > -1){
+            cache[b[i]] = cache[j] + 1;
+        }
+        else{
+            cache[b[i]] = 1;
+        }
     }
 
     for(int i = 0; i <= b[n - 1]; i++){
@@ -48,6 +52,10 @@ int main() {
     }
 
     int result = n - maximum;
+
+//    for(int i = 0; i < b[n-1]; i++){
+//        cout << cache[i] << endl;
+//    }
 
     cout << result << endl;
 
