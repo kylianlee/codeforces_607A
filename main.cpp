@@ -27,23 +27,22 @@ int main() {
 
     for(int i = 0; i < n; i++){
         int temp = b[i] - beacons[b[i]][1];
-        if(temp <= 1) {
+        if(temp <= 0) {
             cache[b[i]] = 1;
             continue;
         }
-        int j = temp;
+        int j = temp - 1;
 
-        while(--j){
+        while(j > -1){
             if(beacons[j][0] == 1)
                 break;
+            j--;
         }
 
-        if(j > -1){
+        if(j > -1)
             cache[b[i]] = cache[j] + 1;
-        }
-        else{
+        else
             cache[b[i]] = 1;
-        }
     }
 
     for(int i = 0; i <= b[n - 1]; i++){
@@ -52,10 +51,6 @@ int main() {
     }
 
     int result = n - maximum;
-
-//    for(int i = 0; i < b[n-1]; i++){
-//        cout << cache[i] << endl;
-//    }
 
     cout << result << endl;
 
